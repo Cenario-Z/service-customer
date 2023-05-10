@@ -11,8 +11,8 @@ jobs:
     - name: Checkout the files
       uses: actions/checkout@v3
 
-    - name: Copy files with SSH
-      uses: easingthemes/ssh-deploy@main
+    - name: Executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
       env:
         SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
         ARGS: "-rlgoDzvc -i --delete"
@@ -20,4 +20,10 @@ jobs:
         REMOTE_HOST: ${{secrets.REMOTE_HOST}}
         REMOTE_USER: ${{secrets.REMOTE_USER}}
         TARGET: "/home/ec2-user/node"
-        # EXCLUDE: "/dist/, /node_modules/, **.env, rebuild_app.sh, watcher.sh"
+        script: |
+            cd ~/node
+            yarn/npm install
+            yarn/npm build
+            yarn/npm i serve
+            serve -p 3000 build/
+        EXCLUDE: "/dist/, /node_modules/, **.env, rebuild_app.sh, watcher.sh"
