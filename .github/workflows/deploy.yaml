@@ -21,5 +21,5 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ec2-user
-          git pull origin master
+          git pull origin main
           docker-compose
