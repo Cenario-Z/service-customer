@@ -19,7 +19,7 @@ jobs:
         username: ${{secrets.REMOTE_USER}}
         script: |
             cd ~/node
-            yarn/npm install
-            yarn/npm build
-            yarn/npm i serve
+            npm install
+            npm build
+            npm i serve
             serve -p 3000 build/
