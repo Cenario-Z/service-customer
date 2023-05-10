@@ -8,18 +8,29 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: SSH Deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd /home/ec2-user
-          git pull origin main
-          docker-compose
+      - name: Build Docker image
+        run: docker build -t service-customer .
+
+      - name: Push Docker image to registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ec2-user/service-customer:latest
+          registry: docker.io
+
+      - name: Deploy Docker image to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker stop service-customer || true
+            docker rm service-customer || true
+            docker pull ec2-user/service-customer:latest
+            docker run -d -p 3000:3000 --name service-customer ec2-user/service-customer:latest
