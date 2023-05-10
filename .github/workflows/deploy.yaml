@@ -12,9 +12,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build Docker image
-        run: docker build -t service-customer .
-
       # - name: Push Docker image to registry
       #   uses: docker/build-push-action@v2
       #   with:
@@ -30,6 +27,7 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            docker build -t service-customer .
             docker stop service-customer || true
             docker rm service-customer || true
             docker pull ec2-user/service-customer:latest
