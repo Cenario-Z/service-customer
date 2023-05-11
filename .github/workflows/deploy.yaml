@@ -25,6 +25,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registry-type: public
+        run: echo ${{ secrets.AWS_ACCESS_KEY_ID }} | ${{ secrets.AWS_SECRET_ACCESS_KEY }}
  
       - name: Build, tag, and push docker image to Amazon ECR Public
         env:
