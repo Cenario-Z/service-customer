@@ -1,8 +1,9 @@
-FROM node:10
+FROM node:18-alpine
+
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
+
+RUN npm ci
 COPY . .
-ENV APP_PORT 8080
-EXPOSE 8080
-CMD [ "node", "app.js" ]
+EXPOSE 3000
+CMD [ "npm", "start" ]
