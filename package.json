@@ -4,7 +4,8 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "deploy": "serverless deploy",
+    "deploy:prod": "serverless deploy --stage prd",
+    "deploy:staging": "serverless deploy --stage stg",
     "lint": "eslint  --ignore-path .gitignore .",
     "test": "jest --passWithNoTests",
     "test:cov": "jest  --detectOpenHandles --runInBand --coverage --passWithNoTests"
