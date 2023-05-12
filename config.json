@@ -1,0 +1,4 @@
+{ 
+  "stg" :  "env-abcd1234" , 
+  "prd" :  "env-defg5678" 
+}

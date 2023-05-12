@@ -2,7 +2,7 @@ name: aws_lambda_deploy
 on:
   push:
     branches:
-      - main
+      - staging
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -24,4 +24,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Serverless Deploy
-        run: npm run-script deploy --stage "avocado"
+        run: npm run deploy:stg

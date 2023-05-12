@@ -1,6 +1,6 @@
-import type { AWS } from '@serverless/typescript';
+import type { AWS } from '@serverless/typescript'
 
-import hello from '@functions/hello';
+import hello from '@functions/hello'
 
 const serverlessConfiguration: AWS = {
   service: 'aws-serverless-typescript-api',
@@ -17,6 +17,7 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
+    stage: '${opt:stage, "dev"}',
   },
   // import the function via paths
   functions: { hello },
@@ -33,6 +34,6 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
   },
-};
+}
 
-module.exports = serverlessConfiguration;
+module.exports = serverlessConfiguration
